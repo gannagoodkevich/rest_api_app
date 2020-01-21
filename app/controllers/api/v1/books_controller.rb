@@ -7,7 +7,7 @@ module Api
       def index
         return author_error if @author.nil?
 
-        render jsonapi: Author.all,
+        render jsonapi: @author.books,
                fields: { authors: %i[title genre created_at updated_at] }
       end
 
