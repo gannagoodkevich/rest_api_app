@@ -1,7 +1,3 @@
-json.author do
-  json.id @author.id
-  json.name @author.name
-  json.books do
-    json.array! @author.books
-  end
-end
+json.id @author.id
+json.name @author.name
+json.books_urls api_v1_author_books_path(@author)
