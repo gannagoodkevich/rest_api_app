@@ -4,27 +4,26 @@ module Api
       before_action :find_author, except: %i[index create]
 
       def index
-        render jsonapi: Author.all,
-               fields: { authors: %i[name created_at updated_at] }
+        render json: AuthorSerializer.new(Author.all)
       end
 
       def update
         author_error if @author.nil?
 
         @author.update!(author_params)
-        render jsonapi: @author
+        render json: AuthorSerializer.new(@author)
       end
 
       def create
         @author = Author.new(author_params)
         @author.save!
-        render jsonapi: @author
+        render json: AuthorSerializer.new(@author)
       end
 
       def show
         return author_error if @author.nil?
 
-        render jsonapi: @author
+        render json: AuthorSerializer.new(@author)
       end
 
       def destroy

@@ -7,15 +7,14 @@ module Api
       def index
         return author_error if @author.nil?
 
-        render jsonapi: Author.all,
-               fields: { authors: %i[title genre created_at updated_at] }
+        render json: BookSerializer.new(@author.books)
       end
 
       def create
         return author_error if @author.nil?
 
         @book = @author.books.create!(book_params)
-        render jsonapi: @book
+        render json: @book
       end
 
       def update
@@ -24,7 +23,7 @@ module Api
         return book_error if @book.nil?
 
         @book.update(book_params)
-        render jsonapi: @book
+        render json: @book
       end
 
       def show
@@ -32,7 +31,7 @@ module Api
 
         book_error if @book.nil?
 
-        render jsonapi: @book
+        render json: @book
       end
 
       def destroy
