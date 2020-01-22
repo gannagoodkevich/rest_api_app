@@ -3,7 +3,7 @@ module Types
     field :all_authors,
           [Types::AuthorType],
           null: false,
-          description: "Returns a list of authors"
+          description: 'Returns a list of authors'
 
     def all_authors
       Author.all
@@ -21,7 +21,6 @@ module Types
           null: false do
             argument :author_id, ID, required: true
           end
-
     def all_books(author_id:)
       Author.find_by(id: author_id).books
     end

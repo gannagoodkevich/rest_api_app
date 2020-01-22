@@ -1,98 +1,92 @@
 module Api
   module V1
     class AuthorsController < ApplicationController
-      #TODO add error handling!!!
-
-      #before_action :find_author, except: %i[index create]
-
       def index
-        #@authors = Author.all
         query_string = "{ allAuthors{
-        id
-        name
-        books{
-            id
-            title
-            genre
-        }
-    } }"
-        result = RestRailsSchema.execute(query_string)
-        render plain: result.to_h["data"].to_s
+                            id
+                            name
+                            books{
+                                id
+                                title
+                                genre
+                            }
+                          }
+                        }"
+        render plain: result(query_string)
       end
 
       def update
         query_string = "mutation {
- updateAuthor(input: {
-   id: #{params[:id]}
-    name: #{params[:name]}
- }) {
-   author {
-     id,
-     name,
-     books{
-         id
-         title
-         genre
-     }
-   }
-   errors
- }
-}"
-        result = RestRailsSchema.execute(query_string)
-        render plain: result.to_h.to_s
+                          updateAuthor(input: {
+                            id: #{params[:id]}
+                             name: #{params[:name]}
+                          })
+                          {
+                            author {
+                              id,
+                              name,
+                              books{
+                                  id
+                                  title
+                                  genre
+                              }
+                            }
+                            errors
+                          }
+                        }"
+        render plain: result(query_string)
       end
 
       def create
         query_string = "mutation {
- createAuthor(input: {
-    name: #{params[:name]}
- }) {
-   author {
-     id,
-     name,
-     books{
-         id
-         title
-         genre
-     }
-   }
-   errors
- }
-}"
-        result = RestRailsSchema.execute(query_string)
-        render plain: result.to_h.to_s
+                          createAuthor(input: {
+                             name: #{params[:name]}
+                          }) {
+                            author {
+                              id,
+                              name,
+                              books{
+                                  id
+                                  title
+                                  genre
+                              }
+                            }
+                            errors
+                          }
+                        }"
+        render plain: result(query_string)
       end
 
       def show
         query_string = "{ author(id: #{params[:id]}){
-        id
-        name
-        books{
-            id
-            title
-            genre
-        }
-    }
-author_errors}"
-        result = RestRailsSchema.execute(query_string)
-        render plain: result.to_h["data"].to_s
+                            id
+                            name
+                            books{
+                                id
+                                title
+                                genre
+                            }
+                          }
+                        }"
+        render plain: result(query_string)
       end
 
       def destroy
         query_string = "mutation {
- deleteAuthor(input: {
-    id: #{params[:id]}
- }) {
-   errors
- }
-}"
-        result = RestRailsSchema.execute(query_string)
-        render plain: result.to_h.to_s
+                          deleteAuthor(input: {
+                              id: #{params[:id]}
+                          })
+                          {
+                           errors
+                          }
+                        }"
+        render plain: result(query_string)
       end
 
       private
-      def author_params
-        params.permit(:name)
+
+      def result(query_string)
+        RestRailsSchema.execute(query_string).to_h.to_s
       end
     end
   end
