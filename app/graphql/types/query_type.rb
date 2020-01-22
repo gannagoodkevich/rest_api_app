@@ -18,11 +18,21 @@ module Types
 
     field :all_books,
           [Types::BookType],
-          null: false,
-          description: "Returns a list of books"
+          null: false do
+            argument :author_id, ID, required: true
+          end
 
-    def all_books
-      Book.all
+    def all_books(author_id:)
+      Author.find_by(id: author_id).books
+    end
+
+    field :book, Types::BookType, null: false do
+      argument :author_id, Integer, required: true
+      argument :id, Integer, required: true
+    end
+    def book(author_id:, id:)
+      author = Author.find_by(id: author_id)
+      author.books.find_by(id: id)
     end
   end
 end

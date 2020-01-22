@@ -1,7 +1,9 @@
 module Api
   module V1
     class AuthorsController < ApplicationController
-      before_action :find_author, except: %i[index create]
+      #TODO add error handling!!!
+
+      #before_action :find_author, except: %i[index create]
 
       def index
         #@authors = Author.all
@@ -15,34 +17,53 @@ module Api
         }
     } }"
         result = RestRailsSchema.execute(query_string)
-        render plain: result.to_h["data"]["allAuthors"].to_s
+        render plain: result.to_h["data"].to_s
       end
 
       def update
-        return author_error if @author.nil?
-
-        @author.update!(author_params)
+        query_string = "mutation {
+ updateAuthor(input: {
+   id: #{params[:id]}
+    name: #{params[:name]}
+ }) {
+   author {
+     id,
+     name,
+     books{
+         id
+         title
+         genre
+     }
+   }
+   errors
+ }
+}"
+        result = RestRailsSchema.execute(query_string)
+        render plain: result.to_h.to_s
       end
 
       def create
-        @author = Author.new(author_params)
-        @author.save!
+        query_string = "mutation {
+ createAuthor(input: {
+    name: #{params[:name]}
+ }) {
+   author {
+     id,
+     name,
+     books{
+         id
+         title
+         genre
+     }
+   }
+   errors
+ }
+}"
+        result = RestRailsSchema.execute(query_string)
+        render plain: result.to_h.to_s
       end
-#TODO add error handling!!!
+
       def show
-        author_error if @author.nil?
-        render plain: @author.to_h["data"]["author"].to_s
-      end
-
-      def destroy
-        return author_error if @author.nil?
-
-        @author.destroy!
-      end
-
-      private
-
-      def find_author
         query_string = "{ author(id: #{params[:id]}){
         id
         name
@@ -51,11 +72,25 @@ module Api
             title
             genre
         }
-    }}"
+    }
+author_errors}"
         result = RestRailsSchema.execute(query_string)
-        @author = result
+        render plain: result.to_h["data"].to_s
       end
 
+      def destroy
+        query_string = "mutation {
+ deleteAuthor(input: {
+    id: #{params[:id]}
+ }) {
+   errors
+ }
+}"
+        result = RestRailsSchema.execute(query_string)
+        render plain: result.to_h.to_s
+      end
+
+      private
       def author_params
         params.permit(:name)
       end

@@ -1,41 +1,100 @@
 module Api
   module V1
     class BooksController < ApplicationController
-      before_action :find_author
-      before_action :find_book, only: %i[update show destroy] 
+      #before_action :find_author
+      #before_action :find_book, only: %i[update show destroy]
 
       def index
-        return author_error if @author.nil?
-
-        @books = @author.books.order('created_at DESC')
+        query_string = "{
+            allBooks(authorId: #{params[:author_id]}){
+              id
+              title
+              author{
+                id
+                name
+              }
+            }
+        }"
+        result = RestRailsSchema.execute(query_string)
+        render plain: result.to_h["data"].to_s
       end
 
       def create
-        return author_error if @author.nil?
+        query_string = "mutation {
+ createBook(input: {
+authorId: #{params[:author_id]}
+    title: #{params[:title]}
+genre: #{params[:genre]}
 
-        @book = @author.books.create!(book_params)
+ }) {
+   book {
+     id
+        title
+        genre
+        author{
+            id
+            name
+        }
+   }
+   errors
+ }
+}"
+        result = RestRailsSchema.execute(query_string)
+        render plain: result.to_h.to_s
       end
 
       def update
-        return author_error if @author.nil?
+        query_string = "mutation {
+ updateBook(input: {
+authorId: #{params[:author_id]}
+   id: #{params[:id]}
+    title: #{params[:title]}
+genre: #{params[:genre]}
 
-        return book_error if @book.nil?
-
-        @book.update(book_params)
+ }) {
+   book {
+     id
+        title
+        genre
+        author{
+            id
+            name
+        }
+   }
+   errors
+ }
+}"
+        result = RestRailsSchema.execute(query_string)
+        render plain: result.to_h.to_s
       end
 
       def show
-        return author_error if @author.nil?
-
-        book_error if @book.nil?
+        query_string = "{
+            book(authorId: #{params[:author_id]},id: #{params[:id]}){
+              id
+              title
+              author{
+                id
+                name
+              }
+            }
+        }"
+        result = RestRailsSchema.execute(query_string)
+        render plain: result.to_h["data"].to_s
       end
 
       def destroy
-        return author_error if @author.nil?
+        query_string = "mutation {
+ deleteBook(input: {
+authorId: #{params[:author_id]}
+   id: #{params[:id]}
 
-        return book_error if @book.nil?
-
-        @book.destroy
+ }) {
+   errors
+ }
+}"
+        result = RestRailsSchema.execute(query_string)
+        render plain: result.to_h.to_s
       end
 
       private
