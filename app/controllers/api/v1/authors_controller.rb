@@ -4,7 +4,18 @@ module Api
       before_action :find_author, except: %i[index create]
 
       def index
-        @authors = Author.all
+        #@authors = Author.all
+        query_string = "{ allAuthors{
+        id
+        name
+        books{
+            id
+            title
+            genre
+        }
+    } }"
+        result = RestRailsSchema.execute(query_string)
+        render plain: result.to_h["data"]["allAuthors"].to_s
       end
 
       def update
@@ -17,9 +28,10 @@ module Api
         @author = Author.new(author_params)
         @author.save!
       end
-
+#TODO add error handling!!!
       def show
         author_error if @author.nil?
+        render plain: @author.to_h["data"]["author"].to_s
       end
 
       def destroy
@@ -31,7 +43,17 @@ module Api
       private
 
       def find_author
-        @author = Author.find_by(id: params[:id])
+        query_string = "{ author(id: #{params[:id]}){
+        id
+        name
+        books{
+            id
+            title
+            genre
+        }
+    }}"
+        result = RestRailsSchema.execute(query_string)
+        @author = result
       end
 
       def author_params

@@ -7,6 +7,8 @@ gem 'rails', '~> 6.0.1'
 gem 'sqlite3', '~> 1.4'
 gem 'puma', '~> 4.1'
 gem 'graphql'
+gem 'webpacker'
+gem 'react-rails'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
