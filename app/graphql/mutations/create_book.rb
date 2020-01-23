@@ -12,13 +12,13 @@ module Mutations
       book = author.books.new(title: title, genre: genre)
       if book.save
         {
-            book: book,
-            errors: []
+          book: book,
+          errors: []
         }
       else
         {
-            author: nil,
-            errors: book.errors.full_messages
+          author: nil,
+          errors: book.errors.full_messages
         }
       end
     end

@@ -9,11 +9,11 @@ module Mutations
       author = Author.find_by(id: id)
       if author.delete
         {
-            errors: []
+          errors: []
         }
       else
         {
-            errors: author.errors.full_messages
+          errors: author.errors.full_messages
         }
       end
     end

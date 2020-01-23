@@ -9,13 +9,13 @@ module Mutations
       author = Author.new(name: name)
       if author.save
         {
-            author: author,
-            errors: []
+          author: author,
+          errors: []
         }
       else
         {
-            author: nil,
-            errors: author.errors.full_messages
+          author: nil,
+          errors: author.errors.full_messages
         }
       end
     end

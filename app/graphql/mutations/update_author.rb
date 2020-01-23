@@ -10,13 +10,13 @@ module Mutations
       author = Author.find_by(id: id)
       if author.update(name: name)
         {
-            author: author,
-            errors: []
+          author: author,
+          errors: []
         }
       else
         {
-            author: nil,
-            errors: author.errors.full_messages
+          author: nil,
+          errors: author.errors.full_messages
         }
       end
     end

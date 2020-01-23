@@ -13,13 +13,13 @@ module Mutations
       book = author.books.find_by(id: id)
       if book.update(title: title, genre: genre)
         {
-            book: book,
-            errors: []
+          book: book,
+          errors: []
         }
       else
         {
-            book: nil,
-            errors: book.errors.full_messages
+          book: nil,
+          errors: book.errors.full_messages
         }
       end
     end
