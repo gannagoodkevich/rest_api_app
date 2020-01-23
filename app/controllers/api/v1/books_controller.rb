@@ -2,18 +2,20 @@ module Api
   module V1
     class BooksController < ApplicationController
       before_action :find_author
-      before_action :find_book, only: %i[update show destroy] 
+      before_action :find_book, only: %i[update show destroy]
 
       def index
         return author_error if @author.nil?
 
-        @books = @author.books.order('created_at DESC')
+        render jsonapi: @author.books,
+               fields: { authors: %i[title genre created_at updated_at] }
       end
 
       def create
         return author_error if @author.nil?
 
         @book = @author.books.create!(book_params)
+        render jsonapi: @book
       end
 
       def update
@@ -22,12 +24,15 @@ module Api
         return book_error if @book.nil?
 
         @book.update(book_params)
+        render jsonapi: @book
       end
 
       def show
         return author_error if @author.nil?
 
         book_error if @book.nil?
+
+        render jsonapi: @book
       end
 
       def destroy

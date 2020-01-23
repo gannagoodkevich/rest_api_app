@@ -6,7 +6,8 @@ ruby '2.6.5'
 gem 'rails', '~> 6.0.1'
 gem 'sqlite3', '~> 1.4'
 gem 'puma', '~> 4.1'
-gem 'jbuilder', '~> 2.7'
+gem 'jsonapi-rails'
+gem 'jsonapi-renderer'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
