@@ -2,7 +2,7 @@ module Api
   module V1
     class BooksController < ApplicationController
       before_action :find_author
-      before_action :find_book, only: %i[update show destroy] 
+      before_action :find_book, only: %i[update show destroy]
 
       def index
         return author_error if @author.nil?

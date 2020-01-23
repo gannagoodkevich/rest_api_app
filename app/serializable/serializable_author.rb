@@ -7,7 +7,7 @@ class SerializableAuthor < JSONAPI::Serializable::Resource
   has_many :books do
     meta do
       { count: @object.books.count,
-        content: @object.books}
+        content: @object.books }
     end
   end
 end
