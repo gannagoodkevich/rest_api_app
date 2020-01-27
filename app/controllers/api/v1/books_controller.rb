@@ -7,13 +7,14 @@ module Api
       def index
         return author_error if @author.nil?
 
-        @books = @author.books.order('created_at DESC')
+        render json: BookSerializer.new(@author.books)
       end
 
       def create
         return author_error if @author.nil?
 
         @book = @author.books.create!(book_params)
+        render json: @book
       end
 
       def update
@@ -22,12 +23,15 @@ module Api
         return book_error if @book.nil?
 
         @book.update(book_params)
+        render json: @book
       end
 
       def show
         return author_error if @author.nil?
 
         book_error if @book.nil?
+
+        render json: @book
       end
 
       def destroy
