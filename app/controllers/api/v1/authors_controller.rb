@@ -23,8 +23,8 @@ module Api
                           })
                           {
                             author {
-                              id,
-                              name,
+                              id
+                              name
                               books{
                                   id
                                   title
@@ -40,16 +40,12 @@ module Api
       def create
         query_string = "mutation {
                           createAuthor(input: {
-                             name: #{params[:name]}
-                          }) {
+                            name: #{params[:name]}
+                          })
+                          {
                             author {
-                              id,
-                              name,
-                              books{
-                                  id
-                                  title
-                                  genre
-                              }
+                              id
+                              name
                             }
                             errors
                           }
