@@ -12,7 +12,7 @@ module Api
                             }
                           }
                         }"
-        render plain: result(query_string)
+        render json: result(query_string)
       end
 
       def update
@@ -34,7 +34,7 @@ module Api
                             errors
                           }
                         }"
-        render plain: result(query_string)
+        render json: result(query_string)
       end
 
       def create
@@ -50,7 +50,7 @@ module Api
                             errors
                           }
                         }"
-        render plain: result(query_string)
+        render json: result(query_string)
       end
 
       def show
@@ -64,7 +64,7 @@ module Api
                             }
                           }
                         }"
-        render plain: result(query_string)
+        render json: result(query_string)
       end
 
       def destroy
@@ -76,7 +76,7 @@ module Api
                            errors
                           }
                         }"
-        render plain: result(query_string)
+        render json: result(query_string)
       end
 
       private
