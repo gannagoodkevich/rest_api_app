@@ -37,7 +37,7 @@ module Types
     field :all_libraries,
           [Types::LibraryType],
           null: false,
-          description: 'Returns a list of ligraries'
+          description: 'Returns a list of libraries'
 
     def all_libraries
       Library.all
