@@ -33,5 +33,21 @@ module Types
       author = Author.find_by(id: author_id)
       author.books.find_by(id: id)
     end
+
+    field :all_libraries,
+          [Types::LibraryType],
+          null: false,
+          description: 'Returns a list of ligraries'
+
+    def all_libraries
+      Library.all
+    end
+
+    field :library, Types::LibraryType, null: false do
+      argument :id, ID, required: true
+    end
+    def library(id:)
+      Library.find_by(id: id)
+    end
   end
 end
