@@ -9,5 +9,7 @@ module Types
     field :create_author, mutation: Mutations::CreateAuthor
 
     field :create_library, mutation: Mutations::CreateLibrary
+    field :delete_library, mutation: Mutations::DeleteLibrary
+    field :update_library, mutation: Mutations::UpdateLibrary
   end
 end

@@ -32,20 +32,17 @@ module Api
 
       def update
         query_string = "mutation {
-                          updateBook(input: {
-                            authorId: #{params[:author_id]}
+                          updateLibrary(input: {
                             id: #{params[:id]}
                             title: #{params[:title]}
-                            genre: #{params[:genre]}
                           })
                           {
-                            book {
+                            library {
                               id
                               title
-                              genre
-                              author{
+                              books{
                                 id
-                                name
+                                title
                               }
                             }
                             errors
@@ -71,8 +68,7 @@ module Api
 
       def destroy
         query_string = "mutation {
-                          deleteBook(input: {
-                            authorId: #{params[:author_id]}
+                          deleteLibrary(input: {
                             id: #{params[:id]}
                           })
                           {
