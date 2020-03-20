@@ -3,6 +3,7 @@ module Mutations
     argument :author_id, ID, required: true
     argument :id, ID, required: true
 
+    field :id, String, null: false
     field :book, Types::BookType, null: false
     field :errors, [String], null: false
 
@@ -10,11 +11,12 @@ module Mutations
       author = Author.find_by(id: author_id)
       if author.books.find_by(id: id).delete
         {
+          id: id,
           errors: []
         }
       else
         {
-          errors: author.errors.full_messages
+          errors: "Error!!!"
         }
       end
     end

@@ -18,11 +18,9 @@ module Types
 
     field :all_books,
           [Types::BookType],
-          null: false do
-            argument :author_id, ID, required: true
-          end
-    def all_books(author_id:)
-      Author.find_by(id: author_id).books
+          null: false
+    def all_books()
+      Book.all
     end
 
     field :book, Types::BookType, null: false do

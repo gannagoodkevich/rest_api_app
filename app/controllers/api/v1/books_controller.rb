@@ -3,7 +3,7 @@ module Api
     class BooksController < ApplicationController
       def index
         query_string = "{
-                          allBooks(authorId: #{params[:author_id]}){
+                          allBooks{
                             id
                             title
                             author{
