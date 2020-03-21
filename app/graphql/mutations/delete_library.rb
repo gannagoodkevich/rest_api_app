@@ -3,12 +3,14 @@ module Mutations
     argument :id, ID, required: true
 
     field :library, Types::LibraryType, null: false
+    field :id, String, null: false
     field :errors, [String], null: false
 
     def resolve(id:)
       library = Library.find_by(id: id)
       if library.delete
         {
+            id: id,
             errors: []
         }
       else
