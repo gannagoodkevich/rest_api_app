@@ -1,14 +1,13 @@
 module Api
   module V1
-    class BooksController < ApplicationController
+    class LibrariesController < ApplicationController
       def index
-        query_string = "{
-                          allBooks{
+        query_string = "{ allLibraries{
                             id
                             title
-                            author{
+                            books{
                               id
-                              name
+                              title
                             }
                           }
                         }"
@@ -17,20 +16,13 @@ module Api
 
       def create
         query_string = "mutation {
-                          createBook(input: {
-                            authorId: #{params[:author_id]}
+                          createLibrary(input: {
                             title: #{params[:title]}
-                            genre: #{params[:genre]}
                           })
                           {
-                            book {
+                            library {
                               id
                               title
-                              genre
-                              author{
-                                id
-                                name
-                              }
                             }
                             errors
                           }
@@ -40,20 +32,17 @@ module Api
 
       def update
         query_string = "mutation {
-                          updateBook(input: {
-                            authorId: #{params[:author_id]}
+                          updateLibrary(input: {
                             id: #{params[:id]}
                             title: #{params[:title]}
-                            genre: #{params[:genre]}
                           })
                           {
-                            book {
+                            library {
                               id
                               title
-                              genre
-                              author{
+                              books{
                                 id
-                                name
+                                title
                               }
                             }
                             errors
@@ -64,12 +53,13 @@ module Api
 
       def show
         query_string = "{
-                          book(authorId: #{params[:author_id]},id: #{params[:id]}){
+                          library(id: #{params[:id]}){
                             id
                             title
-                            author{
+                            books{
                               id
-                              name
+                              title
+                              genre
                             }
                           }
                         }"
@@ -78,8 +68,7 @@ module Api
 
       def destroy
         query_string = "mutation {
-                          deleteBook(input: {
-                            authorId: #{params[:author_id]}
+                          deleteLibrary(input: {
                             id: #{params[:id]}
                           })
                           {

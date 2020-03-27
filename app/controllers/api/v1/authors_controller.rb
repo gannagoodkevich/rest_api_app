@@ -1,41 +1,88 @@
 module Api
   module V1
     class AuthorsController < ApplicationController
-      before_action :find_author, except: %i[index create]
-
       def index
-        @authors = Author.all
+        query_string = "{ allAuthors{
+                            id
+                            name
+                            books{
+                                id
+                                title
+                                genre
+                            }
+                          }
+                        }"
+        render json: result(query_string)
       end
 
       def update
-        return author_error if @author.nil?
-
-        @author.update!(author_params)
+        query_string = "mutation {
+                          updateAuthor(input: {
+                            id: #{params[:id]}
+                             name: #{params[:name]}
+                          })
+                          {
+                            author {
+                              id
+                              name
+                              books{
+                                  id
+                                  title
+                                  genre
+                              }
+                            }
+                            errors
+                          }
+                        }"
+        render json: result(query_string)
       end
 
       def create
-        @author = Author.new(author_params)
-        @author.save!
+        query_string = "mutation {
+                          createAuthor(input: {
+                            name: #{params[:name]}
+                          })
+                          {
+                            author {
+                              id
+                              name
+                            }
+                            errors
+                          }
+                        }"
+        render json: result(query_string)
       end
 
       def show
-        author_error if @author.nil?
+        query_string = "{ author(id: #{params[:id]}){
+                            id
+                            name
+                            books{
+                                id
+                                title
+                                genre
+                            }
+                          }
+                        }"
+        render json: result(query_string)
       end
 
       def destroy
-        return author_error if @author.nil?
-
-        @author.destroy!
+        query_string = "mutation {
+                          deleteAuthor(input: {
+                              id: #{params[:id]}
+                          })
+                          {
+                           errors
+                          }
+                        }"
+        render json: result(query_string)
       end
 
       private
 
-      def find_author
-        @author = Author.find_by(id: params[:id])
-      end
-
-      def author_params
-        params.permit(:name)
+      def result(query_string)
+        RestRailsSchema.execute(query_string).to_h.to_s
       end
     end
   end

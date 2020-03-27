@@ -6,8 +6,9 @@ ruby '2.6.5'
 gem 'rails', '~> 6.0.1'
 gem 'sqlite3', '~> 1.4'
 gem 'puma', '~> 4.1'
-gem 'jbuilder', '~> 2.7'
+gem 'graphql'
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'rack-cors'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
