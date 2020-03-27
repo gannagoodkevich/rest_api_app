@@ -4,11 +4,14 @@ module Mutations
 
     field :author, Types::AuthorType, null: false
     field :errors, [String], null: false
+    field :id, String, null: false
 
     def resolve(id:)
       author = Author.find_by(id: id)
+      author.books.each(&:delete)
       if author.delete
         {
+            id: id,
           errors: []
         }
       else

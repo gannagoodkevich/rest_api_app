@@ -4,5 +4,6 @@ module Types
     field :title, String, null: false
     field :genre, String, null: false
     field :author, Types::AuthorType, null: false
+    field :comments, [Types::CommentType], null: false
   end
 end

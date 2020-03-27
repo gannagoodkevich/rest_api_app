@@ -12,5 +12,9 @@ module Types
     field :delete_library, mutation: Mutations::DeleteLibrary
     field :update_library, mutation: Mutations::UpdateLibrary
     field :create_book_for_library, mutation: Mutations::CreateBookForLibrary
+
+    field :delete_comment, mutation: Mutations::DeleteComment
+    field :update_comment, mutation: Mutations::UpdateComment
+    field :create_comment, mutation: Mutations::CreateComment
   end
 end
