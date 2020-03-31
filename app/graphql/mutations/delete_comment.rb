@@ -5,11 +5,14 @@ module Mutations
     field :comment, Types::CommentType, null: false
     field :errors, [String], null: false
     field :id, String, null: false
+    field :book_id, String, null: false
 
     def resolve(id:)
       comment = Comment.find_by(id: id)
+      book_id = comment.book.id
       if comment.delete
         {
+            book_id: book_id,
             id: id,
             errors: []
         }

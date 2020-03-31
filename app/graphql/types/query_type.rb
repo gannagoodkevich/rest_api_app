@@ -47,5 +47,21 @@ module Types
     def library(id:)
       Library.find_by(id: id)
     end
+
+    field :all_comments,
+          [Types::CommentType],
+          null: false,
+          description: 'Returns a list of comments'
+
+    def all_comments
+      Comment.all
+    end
+
+    field :comment, Types::CommentType, null: false do
+      argument :id, ID, required: true
+    end
+    def comment(id:)
+      Comment.find_by(id: id)
+    end
   end
 end
