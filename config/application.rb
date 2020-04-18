@@ -20,5 +20,8 @@ module RestRails
     config.load_defaults 6.0
 
     config.api_only = true
+
+    config.middleware.insert_after ActiveRecord::Migration::CheckPending, ActionDispatch::Cookies
+    config.middleware.insert_after ActionDispatch::Cookies, ActionDispatch::Session::CookieStore
   end
 end
