@@ -297,13 +297,9 @@ Devise.setup do |config|
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
   #
-    # Add the credentials from your Google application to your secrets
-    client_id = ENV['GOOGLE_CLIENT_ID']
-    client_secret = ENV['GOOGLE_CLIENT_SECRET']
-    # Configure Google omniauth with proper scope
-    config.omniauth :google_oauth2, client_id, client_secret, {
-        scope: "contacts.readonly,userinfo.email"
-    }
+    # Add the credentials from your Google application to your secret
+
+  config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET'], scope: 'email'
 
 
 end

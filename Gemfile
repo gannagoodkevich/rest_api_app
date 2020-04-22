@@ -12,6 +12,7 @@ gem 'rack-cors'
 gem 'omniauth-google-oauth2'
 gem "figaro"
 gem 'devise'
+gem 'omniauth-facebook'
 
 
 group :development, :test do

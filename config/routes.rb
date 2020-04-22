@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   # devise_for :users
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   post "/graphql", to: "graphql#execute"
   namespace 'api' do
@@ -8,6 +7,11 @@ Rails.application.routes.draw do
       resources :libraries
       resources :authors
       resources :books
+      devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+
+      devise_scope :user do
+        '/auth/facebook/callback' 'devise/sessions#new'
+      end
     end
   end
 end
