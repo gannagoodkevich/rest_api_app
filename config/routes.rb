@@ -7,11 +7,12 @@ Rails.application.routes.draw do
       resources :libraries
       resources :authors
       resources :books
-      devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
-
-      devise_scope :user do
-        '/auth/facebook/callback' 'devise/sessions#new'
-      end
     end
+  end
+
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+
+  devise_scope :user do
+    '/auth/facebook/callback' 'devise/sessions#new'
   end
 end
