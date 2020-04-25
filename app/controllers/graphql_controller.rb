@@ -1,11 +1,10 @@
 class GraphqlController < ApplicationController
   def execute
-    puts ENV['FACEBOOK_APP_ID']
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-        current_user: User.last
+        current_user: User.find_by(id: cookies[:user_id])
     }
     result = RestRailsSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result

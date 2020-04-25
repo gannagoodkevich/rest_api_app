@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   post "/graphql", to: "graphql#execute"
   namespace 'api' do
     namespace 'v1' do
+
+      #mount_devise_token_auth_for 'User', at: 'auth'
+
       resources :libraries
       resources :authors
       resources :books
@@ -12,7 +15,5 @@ Rails.application.routes.draw do
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
-  devise_scope :user do
-    '/auth/facebook/callback' 'devise/sessions#new'
-  end
+  delete 'not_devise/users/sign_out', to: 'authentications#destroy'
 end
