@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2020_04_18_140642) do
   create_table "libraries", force: :cascade do |t|
     t.string "title"
     t.integer "book_id"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -55,6 +56,7 @@ ActiveRecord::Schema.define(version: 2020_04_18_140642) do
     t.string "encrypted_password", default: "", null: false
     t.string "provider"
     t.string "uid"
+    t.integer "library_id"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

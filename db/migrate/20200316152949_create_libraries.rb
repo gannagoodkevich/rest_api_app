@@ -3,6 +3,7 @@ class CreateLibraries < ActiveRecord::Migration[6.0]
     create_table :libraries do |t|
       t.string :title
       t.integer :book_id
+      t.integer :user_id
 
       t.timestamps
     end
