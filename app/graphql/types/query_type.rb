@@ -63,5 +63,14 @@ module Types
     def comment(id:)
       Comment.find_by(id: id)
     end
+
+    field :authorized,
+          Types::UserType,
+          null: false,
+          description: 'Returns a user rights'
+
+    def authorized
+      context[:current_user]
+    end
   end
 end

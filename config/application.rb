@@ -19,6 +19,27 @@ module RestRails
   class Application < Rails::Application
     config.load_defaults 6.0
 
-    config.api_only = true
+    config.api_only = false
+
+    #config.middleware.insert_after ActiveRecord::Migration::CheckPending, ActionDispatch::Cookies
+    #config.middleware.insert_after ActionDispatch::Cookies, ActionDispatch::Session::CookieStore
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+
+    config.navigational_formats = []
+
+    Rails.application.config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*',
+                 headers: :any,
+                 methods: [:get, :post, :put, :patch, :delete, :options, :head]
+      end
+    end
+
+    config.action_dispatch.default_headers = {
+      "Access-Control-Allow-Origin" => "*",
+        "Access-Control-Request-Method" => "*"
+    }
   end
 end

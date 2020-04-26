@@ -9,6 +9,13 @@ gem 'puma', '~> 4.1'
 gem 'graphql'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'rack-cors'
+gem 'omniauth-google-oauth2'
+gem "figaro"
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'devise_token_auth'
+
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
