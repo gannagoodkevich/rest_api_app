@@ -26,4 +26,8 @@ Devise.setup do |config|
   config.sign_out_via = :delete
 
   config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET'], scope: 'email', info_fields: 'email', :provider_ignores_state => true
+  # Configure Google omniauth with proper scope
+  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], {
+      scope: "userinfo.email"
+  }
 end
